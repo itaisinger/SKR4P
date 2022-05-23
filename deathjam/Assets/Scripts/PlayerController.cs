@@ -20,7 +20,7 @@ namespace TarodevController {
         public bool Grounded => _colDown;
 
         private Vector3 _lastPosition;
-        private float _currentHorizontalSpeed, _currentVerticalSpeed;
+        public float _currentHorizontalSpeed, _currentVerticalSpeed;
         private GameObject body;
         private Player player_script;
 

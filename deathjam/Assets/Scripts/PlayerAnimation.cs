@@ -13,17 +13,21 @@ public class PlayerAnimation : MonoBehaviour
     private float scale_w;
     private float scale_h;
     private PlayerController controller_script;
+    private Animator anim;
 
     void Start()
     {
         controller_script = GetComponent<PlayerController>();
+        anim = GetComponent<Animator>();
         scale_h = 1f;
         scale_w = 1f;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        //// squash and stretch ////
+
         //approach reset
         scale_w = Mathf.MoveTowards(scale_w, 1, squash_spd * Time.deltaTime);
         scale_h = Mathf.MoveTowards(scale_h, 1, squash_spd * Time.deltaTime);
@@ -42,8 +46,14 @@ public class PlayerAnimation : MonoBehaviour
             scale_w = scale_min;
         }
         
-
-
         transform.localScale = (new Vector3(scale_w, scale_h, 1));
+    
+        //// set animator controller bools ////
+
+        //moving
+        anim.SetBool("moving",controller_script._currentHorizontalSpeed != 0f); //Input.GetAxisRaw("Horizontal") != 0);
+        Debug.Log(controller_script._currentHorizontalSpeed != 0f);
+
+        
     }
 }

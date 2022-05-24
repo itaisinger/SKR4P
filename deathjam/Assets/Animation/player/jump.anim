@@ -23,9 +23,9 @@ AnimationClip:
       value: {fileID: -1212972196, guid: fb5df8d99f7d7814ebf068cb418b7c6a, type: 3}
     - time: 0.125
       value: {fileID: -901610608, guid: fb5df8d99f7d7814ebf068cb418b7c6a, type: 3}
-    - time: 0.25
+    - time: 0.20833333
       value: {fileID: -1817210768, guid: fb5df8d99f7d7814ebf068cb418b7c6a, type: 3}
-    - time: 0.375
+    - time: 0.33333334
       value: {fileID: -1722066366, guid: fb5df8d99f7d7814ebf068cb418b7c6a, type: 3}
     attribute: m_Sprite
     path: 
@@ -55,7 +55,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.41666666
+    m_StopTime: 0.375
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -74,4 +74,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: playJumpSfx
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

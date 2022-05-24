@@ -20,9 +20,11 @@ namespace TarodevController {
         public bool Grounded => _colDown;
 
         private Vector3 _lastPosition;
-        public float _currentHorizontalSpeed, _currentVerticalSpeed;
+        [HideInInspector] public float _currentHorizontalSpeed, _currentVerticalSpeed;
         private GameObject body;
         private Player player_script;
+        public BoxCollider2D box;
+        public float add_y;
 
         //mine
         private PlayerAnimation anim_script;
@@ -35,6 +37,10 @@ namespace TarodevController {
         private void Start(){
             anim_script = GetComponent<PlayerAnimation>();
             player_script = GetComponent<Player>();
+            box = GetComponent<BoxCollider2D>();
+
+            Bounds boxBounds = box.bounds;
+            add_y = boxBounds.extents.y;
         }
 
         private void Update() {
@@ -53,13 +59,14 @@ namespace TarodevController {
             CalculateJump(); // Possibly overrides vertical
 
             MoveCharacter(); // Actually perform the axis movement
+            
+            if(JumpingThisFrame) Debug.Log(JumpingThisFrame);
 
             //wall jump frames
             if(WallJumpedFrames > 0)
             {
                 WallJumpedFrames--;
             }
-            //anim_script.Grounded = _colDown;
         }
 
 
@@ -87,7 +94,7 @@ namespace TarodevController {
         [SerializeField] [Range(0.1f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
 
         private RayRange _raysUp, _raysRight, _raysDown, _raysLeft;
-        private bool _colUp, _colRight, _colDown, _colLeft;
+        [HideInInspector] public bool _colUp, _colRight, _colDown, _colLeft;
 
         private float _timeLeftGrounded;
 
@@ -113,7 +120,7 @@ namespace TarodevController {
             }
 
             _colDown = groundedCheck;
-            
+
             // The rest
             _colUp = RunDetection(_raysUp);
             _colLeft = RunDetection(_raysLeft);
@@ -126,14 +133,16 @@ namespace TarodevController {
 
         private void CalculateRayRanged() {
             // This is crying out for some kind of refactor.
-            var b = new Bounds(transform.position, _characterBounds.size);
- 
-            _raysDown   = new RayRange(b.min.x + _rayBuffer, b.min.y, b.max.x - _rayBuffer, b.min.y, Vector2.down);
-            _raysUp     = new RayRange(b.min.x + _rayBuffer, b.max.y, b.max.x - _rayBuffer, b.max.y, Vector2.up);
-            _raysLeft   = new RayRange(b.min.x, b.min.y + _rayBuffer, b.min.x, b.max.y - _rayBuffer, Vector2.left);
-            _raysRight  = new RayRange(b.max.x, b.min.y + _rayBuffer, b.max.x, b.max.y - _rayBuffer, Vector2.right);
+            
+            Bounds boxBounds = box.bounds;
+            Vector3 center = transform.position;// + new Vector3(0,0.5f,0);   //if changing something with BoxCollision revert the 0.5 to this - boxBounds.extents.y
+            var b = new Bounds(center + new Vector3(0f,0f,0f), _characterBounds.size);
+    
+            _raysDown   = new RayRange(b.min.x + _rayBuffer, b.min.y + add_y, b.max.x - _rayBuffer, b.min.y + add_y, Vector2.down);
+            _raysUp     = new RayRange(b.min.x + _rayBuffer, b.max.y + add_y, b.max.x - _rayBuffer, b.max.y + add_y, Vector2.up);
+            _raysLeft   = new RayRange(b.min.x, b.min.y + _rayBuffer + add_y, b.min.x, b.max.y - _rayBuffer + add_y, Vector2.left);
+            _raysRight  = new RayRange(b.max.x, b.min.y + _rayBuffer + add_y, b.max.x, b.max.y - _rayBuffer + add_y, Vector2.right);
         }
-
 
         private IEnumerable<Vector2> EvaluateRayPositions(RayRange range) {
             for (var i = 0; i < _detectorCount; i++) {
@@ -390,16 +399,17 @@ namespace TarodevController {
 
         #endregion
     
+        #region Misc
+
         [Header("Misc")]
         [SerializeField] private AnimationCurve _jumpXAngle;
         [SerializeField] private AnimationCurve _jumpYAngle;
-
-
-        //functions
 
         private void getBody()
         {
             body = player_script.lastBody;
         }
+
+        #endregion
     }
 }

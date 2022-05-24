@@ -30,7 +30,6 @@ public class Body : MonoBehaviour
             if(Physics2D.OverlapBox(pos, size, 0f, 1<<ground_layer) == null)
             {
                 transform.position += new Vector3(add.x,add.y,0f);
-                Debug.Log(Physics2D.OverlapBox(pos, size, 0f, 1<<ground_layer));
             }
             else
             {

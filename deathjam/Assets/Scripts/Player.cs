@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private PlayerController controller_script;
     private int death_cooldown;
     private BoxCollider2D boxCollider;
-
+    
     // Start is called before the first frame update
     void Start()
     {

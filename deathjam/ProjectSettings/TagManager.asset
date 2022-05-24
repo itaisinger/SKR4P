@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Hazard
+  - PlayerTrigger
   layers:
   - Default
   - TransparentFX

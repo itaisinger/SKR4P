@@ -256,7 +256,7 @@ namespace TarodevController {
         private bool HasBufferedJump => (_colDown) && _lastJumpPressed + _jumpBuffer > Time.time;
         private bool HasBufferedWallJumpRight => (_colLeft) && _lastJumpPressed + _jumpBuffer > Time.time;
         private bool HasBufferedWallJumpLeft => (_colRight)  && _lastJumpPressed + _jumpBuffer > Time.time;
-        private bool HasBufferedDoubleJump => (doubleJumpsRemain > 0 && body != null)  && _lastJumpPressed + _jumpBuffer > Time.time;
+        private bool HasBufferedDoubleJump => (doubleJumpsRemain > 0 && body != null) && (!HasBufferedWallJumpLeft && !HasBufferedWallJumpRight) && _lastJumpPressed + _jumpBuffer > Time.time;
         private int WallJumpedFrames = 0;
         private bool DoubleJumping = false;
         private bool WallJumping = false;

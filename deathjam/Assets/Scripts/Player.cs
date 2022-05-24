@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public GameObject lastBody = null;
     private PlayerController controller_script;
     private int death_cooldown;
+    private BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -20,14 +21,16 @@ public class Player : MonoBehaviour
         transform.position = spawn.transform.position;
         death_cooldown = 0;
         lastBody = null;
+
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if(death_cooldown > 0) death_cooldown--;
-    }
 
+    }
     
     //kill
     public void kill(float killer)
@@ -39,14 +42,10 @@ public class Player : MonoBehaviour
 
         //create a corpse and respawn
         GameObject newBody = Instantiate(bodyObject);
-        float xadd = controller_script._currentHorizontalSpeed  * _slide;
-        float yadd = controller_script._currentVerticalSpeed    * _slide;
-    
-        Debug.Log(xadd + ", " + yadd);
-
+        newBody.GetComponent<Body>().setMomentum(controller_script._currentHorizontalSpeed * _slide * Time.deltaTime, controller_script._currentVerticalSpeed * _slide * Time.deltaTime);
         lastBody = newBody;
         newBody.transform.position = transform.position;
-        newBody.transform.position += new Vector3(xadd,yadd,0);
+        //newBody.transform.position += new Vector3(xadd,yadd,0);
 
         transform.position = spawn.transform.position;
         //set spawn animation

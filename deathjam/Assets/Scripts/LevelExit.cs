@@ -5,17 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class LevelExit : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("PlayerTrigger"))
+        if(collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("finished");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);    
         }
     }

@@ -23,8 +23,8 @@ namespace TarodevController {
         [HideInInspector] public float _currentHorizontalSpeed, _currentVerticalSpeed;
         private GameObject body;
         private Player player_script;
-        public BoxCollider2D box;
-        public float add_y;
+        private BoxCollider2D box;
+        private float add_y;
 
         //mine
         private PlayerAnimation anim_script;
@@ -60,7 +60,7 @@ namespace TarodevController {
 
             MoveCharacter(); // Actually perform the axis movement
             
-            if(JumpingThisFrame) Debug.Log(JumpingThisFrame);
+            //if(JumpingThisFrame) Debug.Log(JumpingThisFrame);
 
             //wall jump frames
             if(WallJumpedFrames > 0)
@@ -132,16 +132,13 @@ namespace TarodevController {
         }
 
         private void CalculateRayRanged() {
-            // This is crying out for some kind of refactor.
-            
-            Bounds boxBounds = box.bounds;
-            Vector3 center = transform.position;// + new Vector3(0,0.5f,0);   //if changing something with BoxCollision revert the 0.5 to this - boxBounds.extents.y
-            var b = new Bounds(center + new Vector3(0f,0f,0f), _characterBounds.size);
-    
-            _raysDown   = new RayRange(b.min.x + _rayBuffer, b.min.y + add_y, b.max.x - _rayBuffer, b.min.y + add_y, Vector2.down);
-            _raysUp     = new RayRange(b.min.x + _rayBuffer, b.max.y + add_y, b.max.x - _rayBuffer, b.max.y + add_y, Vector2.up);
-            _raysLeft   = new RayRange(b.min.x, b.min.y + _rayBuffer + add_y, b.min.x, b.max.y - _rayBuffer + add_y, Vector2.left);
-            _raysRight  = new RayRange(b.max.x, b.min.y + _rayBuffer + add_y, b.max.x, b.max.y - _rayBuffer + add_y, Vector2.right);
+            // This is crying out for some kind of refactor. 
+            var b = new Bounds(transform.position + _characterBounds.center, _characterBounds.size);
+
+            _raysDown   = new RayRange(b.min.x + _rayBuffer, b.min.y, b.max.x - _rayBuffer, b.min.y, Vector2.down);
+            _raysUp     = new RayRange(b.min.x + _rayBuffer, b.max.y, b.max.x - _rayBuffer, b.max.y, Vector2.up);
+            _raysLeft   = new RayRange(b.min.x, b.min.y + _rayBuffer, b.min.x, b.max.y - _rayBuffer, Vector2.left);
+            _raysRight  = new RayRange(b.max.x, b.min.y + _rayBuffer, b.max.x, b.max.y - _rayBuffer, Vector2.right);
         }
 
         private IEnumerable<Vector2> EvaluateRayPositions(RayRange range) {
@@ -324,7 +321,8 @@ namespace TarodevController {
                 Vector3 _dir = (this.transform.position - body.transform.position);//[x,y]
 
                 float _angle = Mathf.Atan2(_dir.y,_dir.x) * Mathf.Rad2Deg;
-                
+                _angle += _angle < 0 ? 360 : 0;
+                Debug.Log(_angle);
                 _currentHorizontalSpeed = -_jumpXAngle.Evaluate(_angle) * _airJumpPush;
                 _currentVerticalSpeed   = _jumpYAngle.Evaluate(_angle) * _airJumpHeight;
 

@@ -6,33 +6,32 @@ using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] public GameObject bodyObject;
-    [SerializeField] public GameObject spawn;
-    [SerializeField] public DeathCounter deathCounter;
+    [SerializeField] private GameObject bodyObject;
+    [SerializeField] private GameObject spawn;
     [SerializeField] private float _slide;
 
     [HideInInspector] public GameObject lastBody = null;
-    private PlayerController controller_script;
-    private int death_cooldown;
-    private BoxCollider2D boxCollider;
 
+    private PlayerController controller_script;
+    private PlayerSfx sfx_script;
+    private int death_cooldown = 0;
+    private BoxCollider2D boxCollider;
+    private DeathCounter deathCounter;
     public Tilemap hazards;
 
     // Start is called before the first frame update
     void Start()
     {
-        controller_script = GetComponent<PlayerController>();
+        //get some components
+        controller_script   = GetComponent<PlayerController>();
+        sfx_script          = GetComponent<PlayerSfx>();
+        deathCounter        = GameObject.FindWithTag("deathCounter").GetComponent<DeathCounter>();
+        boxCollider         = GetComponent<BoxCollider2D>();
+
+        //spawn at spawn
         transform.position = spawn.transform.position;
-        death_cooldown = 0;
-        lastBody = null;
-
-        boxCollider = GetComponent<BoxCollider2D>();
-
         controller_script._currentHorizontalSpeed   = spawn.GetComponent<Spawn>().xMomentum;
-        controller_script._currentVerticalSpeed     = spawn.GetComponent<Spawn>().yMomentum * 2f;
-        Debug.Log(controller_script._currentVerticalSpeed);
-
-        deathCounter = GameObject.FindWithTag("deathCounter").GetComponent<DeathCounter>();
+        controller_script._currentVerticalSpeed     = spawn.GetComponent<Spawn>().yMomentum * 2f;  
     }
 
     // Update is called once per frame
@@ -52,7 +51,15 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R))
         {
             transform.position = spawn.transform.position;
+            sfx_script.playdeathSfx();
         }
+
+        //play sfx if jumping, might not be the wisest place to put this but whatever
+        if(controller_script.JumpingThisFrame)
+            sfx_script.playJumpSfx();
+            
+        if(controller_script.LandingThisFrame)
+            sfx_script.playLandSfx();
     }
     
     //kill
@@ -79,8 +86,10 @@ public class Player : MonoBehaviour
         controller_script._currentHorizontalSpeed   = spawn.GetComponent<Spawn>().xMomentum;
         controller_script._currentVerticalSpeed     = spawn.GetComponent<Spawn>().yMomentum;
 
-
         //increment death count
         deathCounter.addDeath();
+
+        //play sfx
+        sfx_script.playdeathSfx();
     }
 }

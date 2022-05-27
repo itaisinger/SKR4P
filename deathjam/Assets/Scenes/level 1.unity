@@ -10983,17 +10983,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 176670384, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 176670384, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1783959887, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 591844434, guid: af43990c4b404554383d607681acd7c3, type: 3}
+      propertyPath: m_Volume
+      value: 0.228
       objectReference: {fileID: 0}
     - target: {fileID: 74054058822300367, guid: af43990c4b404554383d607681acd7c3, type: 3}
       propertyPath: spawn
@@ -11003,70 +10995,6 @@ PrefabInstance:
       propertyPath: hazards
       value: 
       objectReference: {fileID: 272180008}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _airJumpPush
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _detectionRayLength
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _freeColliderIterations
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpYAngle.m_Curve.Array.data[0].value
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpYAngle.m_Curve.Array.data[1].value
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpYAngle.m_Curve.Array.data[4].value
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpXAngle.m_Curve.Array.data[1].inSlope
-      value: -0.030163206
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpXAngle.m_Curve.Array.data[3].inSlope
-      value: 0.034725174
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpYAngle.m_Curve.Array.data[2].inSlope
-      value: -0.0022222227
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpXAngle.m_Curve.Array.data[1].outSlope
-      value: -0.030163206
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpXAngle.m_Curve.Array.data[3].inWeight
-      value: 0.036629573
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpXAngle.m_Curve.Array.data[3].outSlope
-      value: 0.034725174
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpYAngle.m_Curve.Array.data[2].outSlope
-      value: -0.0022222227
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpXAngle.m_Curve.Array.data[1].outWeight
-      value: 0.043284945
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpXAngle.m_Curve.Array.data[1].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _jumpXAngle.m_Curve.Array.data[3].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 483710876288139409, guid: af43990c4b404554383d607681acd7c3, type: 3}
       propertyPath: m_RootOrder
       value: 4

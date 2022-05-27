@@ -44,6 +44,7 @@ namespace TarodevController {
         }
 
         private void Update() {
+            
             if(!_active) return;
             // Calculate velocity
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
@@ -322,7 +323,8 @@ namespace TarodevController {
 
                 float _angle = Mathf.Atan2(_dir.y,_dir.x) * Mathf.Rad2Deg;
                 _angle += _angle < 0 ? 360 : 0;
-                Debug.Log(_angle);
+
+                Debug.Log(_angle + ", " + _jumpXAngle.Evaluate(_angle));
                 _currentHorizontalSpeed = -_jumpXAngle.Evaluate(_angle) * _airJumpPush;
                 _currentVerticalSpeed   = _jumpYAngle.Evaluate(_angle) * _airJumpHeight;
 

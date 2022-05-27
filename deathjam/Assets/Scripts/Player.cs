@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] public GameObject bodyObject;
     [SerializeField] public GameObject spawn;
+    [SerializeField] public DeathCounter deathCounter;
     [SerializeField] private float _slide;
 
     [HideInInspector] public GameObject lastBody = null;
@@ -26,6 +27,12 @@ public class Player : MonoBehaviour
         lastBody = null;
 
         boxCollider = GetComponent<BoxCollider2D>();
+
+        controller_script._currentHorizontalSpeed   = spawn.GetComponent<Spawn>().xMomentum;
+        controller_script._currentVerticalSpeed     = spawn.GetComponent<Spawn>().yMomentum * 2f;
+        Debug.Log(controller_script._currentVerticalSpeed);
+
+        deathCounter = GameObject.FindWithTag("deathCounter").GetComponent<DeathCounter>();
     }
 
     // Update is called once per frame
@@ -59,14 +66,21 @@ public class Player : MonoBehaviour
         if(lastBody != null)
             lastBody.GetComponent<Body>().changeSprite();
 
-        //create a corpse and respawn
+        //create a body
         GameObject newBody = Instantiate(bodyObject);
         newBody.GetComponent<Body>().setMomentum(controller_script._currentHorizontalSpeed * _slide * Time.deltaTime, controller_script._currentVerticalSpeed * _slide * Time.deltaTime);
         lastBody = newBody;
         newBody.transform.position = transform.position;
         newBody.GetComponent<SpriteRenderer>().flipX = GetComponent<SpriteRenderer>().flipX;
 
+        //respawn
         transform.position = spawn.transform.position;
-        //set spawn animation
+
+        controller_script._currentHorizontalSpeed   = spawn.GetComponent<Spawn>().xMomentum;
+        controller_script._currentVerticalSpeed     = spawn.GetComponent<Spawn>().yMomentum;
+
+
+        //increment death count
+        deathCounter.addDeath();
     }
 }

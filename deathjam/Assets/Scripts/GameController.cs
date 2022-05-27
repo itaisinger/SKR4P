@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     //public Scene nextScene;
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
+    }
 
     public void nextScene()
     {

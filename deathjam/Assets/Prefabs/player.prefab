@@ -292,6 +292,10 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7789946320323606998, guid: 2e6a50ccb1a1e8a48a08b49afa0ae2c1, type: 3}
+      propertyPath: _wallJumpFrames
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789946320323606998, guid: 2e6a50ccb1a1e8a48a08b49afa0ae2c1, type: 3}
       propertyPath: _jumpYAngle.m_Curve.Array.data[1].value
       value: 0.8
       objectReference: {fileID: 0}

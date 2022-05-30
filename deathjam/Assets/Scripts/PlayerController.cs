@@ -68,6 +68,11 @@ namespace TarodevController {
             {
                 WallJumpedFrames--;
             }
+            //double jump frames
+            if(DoubleJumpFrames > 0)
+            {
+                DoubleJumpFrames--;
+            }
         }
 
 
@@ -77,7 +82,7 @@ namespace TarodevController {
             Input = new FrameInput {
                 JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
                 JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
-                X = WallJumpedFrames > 0 ? 0 : UnityEngine.Input.GetAxisRaw("Horizontal"),
+                X = WallJumpedFrames > 0 || DoubleJumpFrames > 0 ? 0 : UnityEngine.Input.GetAxisRaw("Horizontal"),
             };
             if (Input.JumpDown) {
                 _lastJumpPressed = Time.time;
@@ -142,7 +147,7 @@ namespace TarodevController {
             _raysLeft   = new RayRange(b.min.x, b.min.y + _rayBuffer, b.min.x, b.max.y - _rayBuffer, Vector2.left);
             _raysRight  = new RayRange(b.max.x, b.min.y + _rayBuffer, b.max.x, b.max.y - _rayBuffer, Vector2.right);
 
-            float offset = _detectionRayLength * 0.8f;
+            float offset = _detectionRayLength * 0.6f;
 
             _raysUpR    = new RayRange(b.max.x - offset, b.max.y - offset, b.max.x - offset, b.max.y - offset, Vector2.one);
             _raysUpL    = new RayRange(b.min.x + offset, b.max.y - offset, b.min.x + offset, b.max.y - offset, new Vector2(-1,1));
@@ -262,6 +267,7 @@ namespace TarodevController {
         [SerializeField] private float _jumpEndEarlyGravityModifier = 3;
         [SerializeField] private int _wallJumpFrames = 5;
         [SerializeField] private int _doubleJumps = 1;
+        [SerializeField] private int _doubleJumpFrames = 10;
         private int doubleJumpsRemain = 0;
         private bool _coyoteUsable;
         private bool _endedJumpEarly = true;
@@ -273,6 +279,7 @@ namespace TarodevController {
         private bool HasBufferedWallJumpLeft => (_colRight)  && _lastJumpPressed + _jumpBuffer > Time.time;
         private bool HasBufferedDoubleJump => (doubleJumpsRemain > 0 && body != null) && (!HasBufferedWallJumpLeft && !HasBufferedWallJumpRight) && _lastJumpPressed + _jumpBuffer > Time.time;
         private int WallJumpedFrames = 0;
+        private int DoubleJumpFrames = 0;
         public bool DoubleJumping = false;
         private bool WallJumping = false;
 
@@ -348,6 +355,7 @@ namespace TarodevController {
                 _timeLeftGrounded = float.MinValue;
                 JumpingThisFrame = true;
                 DoubleJumping = true;
+                DoubleJumpFrames = _doubleJumpFrames; //how many frames to ignore input for
             }
             //not jumping
             else {

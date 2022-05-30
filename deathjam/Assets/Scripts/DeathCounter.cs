@@ -18,6 +18,7 @@ public class DeathCounter : MonoBehaviour
 
     public void addDeath()
     {
+        Debug.Log("death added");
         Data.Deaths++;
         textComp.text = base_string + Data.Deaths;
     }

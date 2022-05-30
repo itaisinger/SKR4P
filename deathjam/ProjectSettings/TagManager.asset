@@ -10,6 +10,8 @@ TagManager:
   - deathCounter
   - Transition
   - DeathBox
+  - SpikesHor
+  - SpikesVer
   layers:
   - Default
   - TransparentFX

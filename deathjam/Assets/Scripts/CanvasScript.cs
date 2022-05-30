@@ -15,7 +15,7 @@ public class CanvasScript : MonoBehaviour
     {
         Debug.Log("OnSceneLoaded: " + scene.name);
         Debug.Log(mode);
-    } 
+    }
 
     // Update is called once per frame
     void Update()

@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public string nextScene;
+    public string creditsScene;
+    private string targetScene;
     private Transition trans;
     private bool ending = false;
 
@@ -18,13 +20,32 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            trans.TransitionOut();
-            ending = true;
+            Debug.Log("quit");
+            Application.Quit();
         }
 
+        //enter first level
+        if(Input.GetKeyDown(KeyCode.Space))
+        {  
+            Debug.Log("space");
+            ending = true;
+            targetScene = nextScene;
+            trans.TransitionOut();
+        }
+        //enter credits
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("c");
+            ending = true;
+            targetScene = creditsScene;
+            trans.TransitionOut();
+        }
+
+        
+
         if(ending && trans.IsDone())
-            SceneManager.LoadScene(nextScene);
+            SceneManager.LoadScene(targetScene);
     }
 }

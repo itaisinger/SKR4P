@@ -95,6 +95,7 @@ namespace TarodevController {
         [SerializeField] [Range(0.1f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
 
         private RayRange _raysUp, _raysRight, _raysDown, _raysLeft;
+        private RayRange _raysUpR, _raysUpL, _raysDownR, _raysDownL;
         [HideInInspector] public bool _colUp, _colRight, _colDown, _colLeft;
 
         private float _timeLeftGrounded;
@@ -106,7 +107,7 @@ namespace TarodevController {
 
             // Ground
             LandingThisFrame = false;
-            var groundedCheck = RunDetection(_raysDown);
+            var groundedCheck = RunDetection(_raysDown);// || RunDetection(_raysDownR) || RunDetection(_raysDownL);
             if (_colDown && !groundedCheck)    // Only trigger when first leaving
             {
                 _timeLeftGrounded = Time.time; 
@@ -123,9 +124,9 @@ namespace TarodevController {
             _colDown = groundedCheck;
 
             // The rest
-            _colUp = RunDetection(_raysUp);
-            _colLeft = RunDetection(_raysLeft);
-            _colRight = RunDetection(_raysRight);
+            _colUp      = RunDetection(_raysUp)     || RunDetection(_raysUpR) || RunDetection(_raysUpL);
+            _colLeft    = RunDetection(_raysLeft)   || RunDetection(_raysUpL) || RunDetection(_raysDownL);
+            _colRight   = RunDetection(_raysRight)  || RunDetection(_raysUpR) || RunDetection(_raysDownR);
 
             bool RunDetection(RayRange range) {
                 return EvaluateRayPositions(range).Any(point => Physics2D.Raycast(point, range.Dir, _detectionRayLength, _groundLayer));
@@ -140,6 +141,13 @@ namespace TarodevController {
             _raysUp     = new RayRange(b.min.x + _rayBuffer, b.max.y, b.max.x - _rayBuffer, b.max.y, Vector2.up);
             _raysLeft   = new RayRange(b.min.x, b.min.y + _rayBuffer, b.min.x, b.max.y - _rayBuffer, Vector2.left);
             _raysRight  = new RayRange(b.max.x, b.min.y + _rayBuffer, b.max.x, b.max.y - _rayBuffer, Vector2.right);
+
+            float offset = _detectionRayLength * 0.8f;
+
+            _raysUpR    = new RayRange(b.max.x - offset, b.max.y - offset, b.max.x - offset, b.max.y - offset, Vector2.one);
+            _raysUpL    = new RayRange(b.min.x + offset, b.max.y - offset, b.min.x + offset, b.max.y - offset, new Vector2(-1,1));
+            _raysDownL  = new RayRange(b.min.x + offset, b.min.y + offset, b.min.x + offset, b.min.y + offset, new Vector2(-1,-1));
+            _raysDownR  = new RayRange(b.max.x - offset, b.min.y + offset, b.max.x - offset, b.min.y + offset, new Vector2(1,-1));
         }
 
         private IEnumerable<Vector2> EvaluateRayPositions(RayRange range) {
@@ -158,7 +166,7 @@ namespace TarodevController {
             if (!Application.isPlaying) {
                 CalculateRayRanged();
                 Gizmos.color = Color.blue;
-                foreach (var range in new List<RayRange> { _raysUp, _raysRight, _raysDown, _raysLeft }) {
+                foreach (var range in new List<RayRange> { _raysUp, _raysRight, _raysDown, _raysLeft, _raysUpR, _raysUpL, _raysDownR, _raysDownL }) {
                     foreach (var point in EvaluateRayPositions(range)) {
                         Gizmos.DrawRay(point, range.Dir * _detectionRayLength);
                     }
@@ -265,7 +273,7 @@ namespace TarodevController {
         private bool HasBufferedWallJumpLeft => (_colRight)  && _lastJumpPressed + _jumpBuffer > Time.time;
         private bool HasBufferedDoubleJump => (doubleJumpsRemain > 0 && body != null) && (!HasBufferedWallJumpLeft && !HasBufferedWallJumpRight) && _lastJumpPressed + _jumpBuffer > Time.time;
         private int WallJumpedFrames = 0;
-        private bool DoubleJumping = false;
+        public bool DoubleJumping = false;
         private bool WallJumping = false;
 
         private void CalculateJumpApex() {
@@ -300,6 +308,9 @@ namespace TarodevController {
                 JumpingThisFrame = true;
                 WallJumpedFrames = _wallJumpFrames;
                 WallJumping = true;
+
+                //reset double jumps is 2 op
+                //doubleJumpsRemain = _doubleJumps;
             }
             //walljump right
             else if(Input.JumpDown && HasBufferedWallJumpLeft)
@@ -312,6 +323,9 @@ namespace TarodevController {
                 JumpingThisFrame = true;
                 WallJumpedFrames = _wallJumpFrames;
                 WallJumping = true;
+
+                //reset double jumps
+                //doubleJumpsRemain = _doubleJumps;
             }
             //double jump
             else if(Input.JumpDown && HasBufferedDoubleJump)
@@ -324,7 +338,7 @@ namespace TarodevController {
                 float _angle = Mathf.Atan2(_dir.y,_dir.x) * Mathf.Rad2Deg;
                 _angle += _angle < 0 ? 360 : 0;
 
-                Debug.Log(_angle + ", " + _jumpXAngle.Evaluate(_angle));
+                //Debug.Log(_angle + ", " + _jumpXAngle.Evaluate(_angle));
                 _currentHorizontalSpeed = -_jumpXAngle.Evaluate(_angle) * _airJumpPush;
                 _currentVerticalSpeed   = _jumpYAngle.Evaluate(_angle) * _airJumpHeight;
 
@@ -392,7 +406,7 @@ namespace TarodevController {
 
                     return;
                 }
-
+                
                 positionToMoveTo = posToTry;
             }
         }

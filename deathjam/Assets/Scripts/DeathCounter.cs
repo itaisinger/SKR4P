@@ -6,17 +6,19 @@ using UnityEngine.UI;
 public class DeathCounter : MonoBehaviour
 {   
     private Text textComp;
-    private int deathCount = 0;
+    private string base_string = "";//"Death Count: ";
+    //private int deathCount = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         textComp = GetComponent<Text>();
+        textComp.text = base_string + Data.Deaths;
     }
 
     public void addDeath()
     {
-        deathCount++;
-        textComp.text = "Death Count: " + deathCount;
+        Data.Deaths++;
+        textComp.text = base_string + Data.Deaths;
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class Player : MonoBehaviour
 {
     [SerializeField] private GameObject bodyObject;
+    [SerializeField] private GameObject particleObject;
     [SerializeField] private GameObject spawn;
     [SerializeField] private float _slide;
 
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     private BoxCollider2D boxCollider;
     private DeathCounter deathCounter;
     public Tilemap hazards;
+    private float particleCooldown = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +61,20 @@ public class Player : MonoBehaviour
             sfx_script.playJumpSfx();
             
         if(controller_script.LandingThisFrame)
+        {
+            particleCooldown = 0f;
             sfx_script.playLandSfx();
+        }
+
+
+        //shoot projectile when double jumping
+        if(controller_script.DoubleJumping && particleCooldown == 0f)
+        {
+            particleCooldown = 30;
+            GameObject proj = Instantiate(particleObject);
+            proj.transform.position = transform.position;
+            proj.GetComponent<LastBody>().dest = lastBody.transform;
+        }
     }
     
     //kill
@@ -70,15 +85,19 @@ public class Player : MonoBehaviour
     
         death_cooldown = 10;
 
-        if(lastBody != null)
-            lastBody.GetComponent<Body>().changeSprite();
+        //dont create a body if died by a death field
+        if(killer != 1f)
+        {
+            if(lastBody != null)
+                lastBody.GetComponent<Body>().changeSprite();
 
-        //create a body
-        GameObject newBody = Instantiate(bodyObject);
-        newBody.GetComponent<Body>().setMomentum(controller_script._currentHorizontalSpeed * _slide * Time.deltaTime, controller_script._currentVerticalSpeed * _slide * Time.deltaTime);
-        lastBody = newBody;
-        newBody.transform.position = transform.position;
-        newBody.GetComponent<SpriteRenderer>().flipX = GetComponent<SpriteRenderer>().flipX;
+            //create a body
+            GameObject newBody = Instantiate(bodyObject);
+            newBody.GetComponent<Body>().setMomentum(controller_script._currentHorizontalSpeed * _slide * Time.deltaTime, controller_script._currentVerticalSpeed * _slide * Time.deltaTime);
+            lastBody = newBody;
+            newBody.transform.position = transform.position;
+            newBody.GetComponent<SpriteRenderer>().flipX = GetComponent<SpriteRenderer>().flipX;
+        }
 
         //respawn
         transform.position = spawn.transform.position;
@@ -91,5 +110,15 @@ public class Player : MonoBehaviour
 
         //play sfx
         sfx_script.playdeathSfx();
+    }
+
+    //death field
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("DeathBox"))
+        {
+            kill(1f);
+        }
+
     }
 }

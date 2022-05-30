@@ -18,7 +18,7 @@ public class Transition : MonoBehaviour
         //TargetBottom = -200f;
         //setTop(TargetBottom);
     }
-
+    
     // Update is called once per frame
     void Update()
     {   
@@ -29,8 +29,6 @@ public class Transition : MonoBehaviour
         //set top
         //setTop(Mathf.Lerp(trans.offsetMin.x, TargetTop, rate));
         //setTop(Mathf.MoveTowards(trans.offsetMin.x, TargetTop, 0.1f));
-
-        Debug.Log(trans.offsetMin.y);
     }
 
     public void TransitionOut()
@@ -43,7 +41,7 @@ public class Transition : MonoBehaviour
 
     public bool IsDone()
     {
-        Debug.Log(trans.offsetMin.y - TargetBottom);
+        //Debug.Log(trans.offsetMin.y - TargetBottom);
         return Mathf.Abs(trans.offsetMin.y - TargetBottom) < 5f;
     }
 

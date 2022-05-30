@@ -9,6 +9,7 @@ TagManager:
   - PlayerTrigger
   - deathCounter
   - Transition
+  - DeathBox
   layers:
   - Default
   - TransparentFX

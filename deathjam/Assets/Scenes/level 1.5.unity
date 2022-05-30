@@ -10467,10 +10467,6 @@ PrefabInstance:
       propertyPath: hazards
       value: 
       objectReference: {fileID: 272180008}
-    - target: {fileID: 483710876288139408, guid: af43990c4b404554383d607681acd7c3, type: 3}
-      propertyPath: _airJumpPush
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 483710876288139409, guid: af43990c4b404554383d607681acd7c3, type: 3}
       propertyPath: m_RootOrder
       value: 3

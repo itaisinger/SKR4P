@@ -17,5 +17,11 @@ character design
 
 link to Mark's page: https://twitter.com/pixel_sevral
 
+# Screenshots
+
+![Screenshot from the game](screenshot_1.png)
+![Screenshot from the game](screenshot_2.png)
+![Screenshot from the game](screenshot_2.png)
+
 
 

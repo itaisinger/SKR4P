@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1813366920941805489}
   - component: {fileID: 1813366920941805454}
+  - component: {fileID: 1237400654}
+  - component: {fileID: 458111794}
   m_Layer: 0
   m_Name: Music player
-  m_TagString: Untagged
+  m_TagString: Music
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,3 +130,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1237400654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813366920941805455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8bdcbed705d11946b3bcdd926707e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &458111794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813366920941805455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382b2c1717f604247b53757db8df2a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Deaths: 0

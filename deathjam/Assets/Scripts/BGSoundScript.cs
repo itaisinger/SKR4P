@@ -31,9 +31,10 @@ public class BGSoundScript : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public int Deaths = 0;
+
+    public void Increment()
     {
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        Debug.Log(mode);
+        Deaths++;
     }
 }

@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public static class Data
+public class Data : MonoBehaviour
 {
-    public static int Deaths = 0;
+    public int Deaths = 0;
+
+    public void Increment()
+    {
+        Debug.Log("death inceremented");
+        Deaths++;
+    }
 }

@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rounds: 30
   velocity_mult: 200
-  OppositePushMult: 0.03
+  OppositePushMult: 0.01
   nextSprite: {fileID: -1518292172, guid: c855d58c2d374ea4fac5bb8a3dcfafa4, type: 3}
   velocity: {x: 0, y: 0}
 --- !u!50 &2014373639

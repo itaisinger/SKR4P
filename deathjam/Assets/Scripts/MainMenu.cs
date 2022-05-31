@@ -29,7 +29,6 @@ public class MainMenu : MonoBehaviour
         //enter first level
         if(Input.GetKeyDown(KeyCode.Space))
         {  
-            Debug.Log("space");
             ending = true;
             targetScene = nextScene;
             trans.TransitionOut();

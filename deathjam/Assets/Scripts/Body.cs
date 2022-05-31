@@ -37,7 +37,7 @@ public class Body : MonoBehaviour
     void FixedUpdate()
     {   
         //if remain slide frames, go sliding.
-        if(moving && roundRemain > 0)
+        if(roundRemain > 0 && collidedWithSpikeField)
         {
             //body.velocity = new Vector3(0f,0f,0f);
             body.AddForce(velocity * velocity_mult,ForceMode2D.Impulse);
@@ -46,7 +46,7 @@ public class Body : MonoBehaviour
             roundRemain--;
 
         }
-        else if(roundRemain < -rounds)
+        else if(roundRemain > -rounds)
         {
             body.velocity = new Vector3(0f,0f,0f);
             roundRemain--;
@@ -75,11 +75,14 @@ public class Body : MonoBehaviour
         {
             velocity.x *= OppositePushMult;
         }
+
         //spikes are horizontal
         if(spikeField.CompareTag(HOR_TAG))
         {
-            velocity.y *= OppositePushMult;
+            velocity.y *= OppositePushMult*0.2f;
         }
+
+        //Debug.Log(velocity);
     }
 
     public void setMomentum(float xadd,float yadd)

@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
         //shoot projectile when double jumping
         if(controller_script.DoubleJumping && particleCooldown == 0f)
         {
-            particleCooldown = 30;
+            particleCooldown = 30f;
             GameObject proj = Instantiate(particleObject);
             proj.transform.position = transform.position;
             proj.GetComponent<LastBody>().dest = lastBody.transform;
@@ -93,7 +93,10 @@ public class Player : MonoBehaviour
 
             //create a body
             GameObject newBody = Instantiate(bodyObject);
-            newBody.GetComponent<Body>().setMomentum(controller_script._currentHorizontalSpeed * _slide * Time.deltaTime, controller_script._currentVerticalSpeed * _slide * Time.deltaTime);
+            float xadd = Mathf.Clamp(controller_script._currentHorizontalSpeed  * _slide * Time.deltaTime, -0.06f,0.06f);
+            float yadd = Mathf.Clamp(controller_script._currentVerticalSpeed    * _slide * Time.deltaTime, -0.06f,0.06f);
+            Debug.Log(yadd);
+            newBody.GetComponent<Body>().setMomentum(xadd,yadd);
             lastBody = newBody;
             newBody.transform.position = transform.position;
             newBody.GetComponent<SpriteRenderer>().flipX = GetComponent<SpriteRenderer>().flipX;
@@ -106,7 +109,14 @@ public class Player : MonoBehaviour
         controller_script._currentVerticalSpeed     = spawn.GetComponent<Spawn>().yMomentum;
 
         //increment death count
-        deathCounter.addDeath();
+        if(deathCounter == null)
+        {
+            deathCounter = GameObject.FindWithTag("deathCounter").GetComponent<DeathCounter>();
+            Debug.Log("death counter readded");
+        }
+        else Debug.Log(deathCounter);
+        //deathCounter.addDeath();
+        GameObject.FindWithTag("Music").GetComponent<BGSoundScript>().Increment();
 
         //play sfx
         sfx_script.playdeathSfx();
@@ -119,6 +129,5 @@ public class Player : MonoBehaviour
         {
             kill(1f);
         }
-
     }
 }

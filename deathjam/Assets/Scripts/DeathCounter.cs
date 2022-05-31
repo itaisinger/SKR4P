@@ -6,20 +6,25 @@ using UnityEngine.UI;
 public class DeathCounter : MonoBehaviour
 {   
     private Text textComp;
-    private string base_string = "";//"Death Count: ";
-    //private int deathCount = 0;
+    private string base_string = "";
+    private BGSoundScript data;
 
     // Start is called before the first frame update
     void Start()
     {
         textComp = GetComponent<Text>();
-        textComp.text = base_string + Data.Deaths;
+        data = GameObject.FindWithTag("Music").GetComponent<BGSoundScript>();
+        textComp.text = base_string + data.Deaths;
+    }
+
+    void Update()
+    {
+        textComp.text = base_string + data.Deaths;
     }
 
     public void addDeath()
     {
-        Debug.Log("death added");
-        Data.Deaths++;
-        textComp.text = base_string + Data.Deaths;
+        Debug.Log("death added through deathCounter");
+        data.Increment();
     }
 }

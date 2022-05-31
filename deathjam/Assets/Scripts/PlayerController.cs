@@ -160,7 +160,7 @@ namespace TarodevController {
                 var t = (float)i / (_detectorCount - 1);
                 yield return Vector2.Lerp(range.Start, range.End, t);
             }
-        }
+        }  
 
         private void OnDrawGizmos() {
             // Bounds

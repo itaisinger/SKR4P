@@ -12,6 +12,7 @@ TagManager:
   - DeathBox
   - SpikesHor
   - SpikesVer
+  - Music
   layers:
   - Default
   - TransparentFX

@@ -1,7 +1,7 @@
-## SKR4P
+# SKR4P
 a game jam game built for gamedev.tv's jam, with the theme "Death is just the beginning".
 
-# Team
+## Team
 Itai Singer: 
 programming
 game design
@@ -17,11 +17,10 @@ character design
 
 link to Mark's page: https://twitter.com/pixel_sevral
 
-# Screenshots
+## Screenshots
 
 ![Screenshot from the game](3.png)
 ![Screenshot from the game](2.png)
-![Screenshot from the game](Screenshot (36).png)
 
 
 

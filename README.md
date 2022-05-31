@@ -19,9 +19,9 @@ link to Mark's page: https://twitter.com/pixel_sevral
 
 # Screenshots
 
-![Screenshot from the game](screenshot_1.png)
-![Screenshot from the game](screenshot_2.png)
-![Screenshot from the game](screenshot_2.png)
+![Screenshot from the game](3.png)
+![Screenshot from the game](2.png)
+![Screenshot from the game](Screenshot (36).png)
 
 
 
